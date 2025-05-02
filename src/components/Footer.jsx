@@ -1,9 +1,15 @@
 import React from 'react';
+import { NavLink } from 'react-router';
 
 export default function Footer() {
   return (
     <footer className="flex fixed bottom-4 right-1/2 translate-x-1/2 rounded-lg shadow-xl px-6 py-3 bg-secondary-content">
-      <a href="#" className="flex flex-col items-center px-6 py-1 rounded-md bg-base-100">
+      <NavLink
+        to="/"
+        className={({ isActive }) =>
+          isActive ? 'menu-default-class bg-base-100' : 'menu-default-class'
+        }
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -19,8 +25,13 @@ export default function Footer() {
           />
         </svg>
         <span className="text-sm">Threads</span>
-      </a>
-      <a href="#" className="flex flex-col items-center px-6 py-1 rounded-md">
+      </NavLink>
+      <NavLink
+        to="/leaderboards"
+        className={({ isActive }) =>
+          isActive ? 'menu-default-class bg-base-100' : 'menu-default-class'
+        }
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -36,7 +47,7 @@ export default function Footer() {
           />
         </svg>
         <span className="text-sm">Leaderboards</span>
-      </a>
+      </NavLink>
     </footer>
   );
 }

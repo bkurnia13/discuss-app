@@ -1,22 +1,21 @@
 import React from 'react';
+import { Routes, Route } from 'react-router';
 import './App.css';
-import Navbar from './components/Navbar';
+import Layout from './pages/Layout';
 import HomePage from './pages/Homepage';
-// import LoginPage from './pages/LoginPage';
+import LoginPage from './pages/LoginPage';
 // import DetailPage from './pages/DetailPage';
-import Footer from './components/Footer';
+import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
   return (
-    <>
-      <Navbar />
-      <main className="mb-32 px-3 sm:px-6 md:px-12 lg:px-24">
-        <HomePage />
-        {/* <LoginPage /> */}
-        {/* <DetailPage /> */}
-      </main>
-      <Footer />
-    </>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<HomePage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
   );
 }
 

@@ -7,3 +7,7 @@
   prefix: ;
   logs: true;
 }
+
+.menu-default-class {
+  @apply flex flex-col items-center px-6 py-1 rounded-md;
+}

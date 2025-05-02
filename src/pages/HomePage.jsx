@@ -7,7 +7,7 @@ export default function HomePage() {
   return (
     <>
       <PopularCategory />
-      <div className="grid lg:grid-cols-2 lg:gap-x-4">
+      <div className="grid lg:grid-cols-2 lg:gap-x-4 mb-32">
         <DiscussItem />
       </div>
       <div className="fixed bottom-30 sm:bottom-8 right-3 sm:right-6 md:right-12 lg:right-24">
