@@ -21,4 +21,29 @@ const threadShape = {
   user: PropTypes.shape(userShape),
 };
 
-export { userShape, threadShape };
+const commentShape = {
+  id: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+  createdAt: PropTypes.string.isRequired,
+  owner: PropTypes.shape({
+    ...userShape,
+    email: PropTypes.string, // Optional
+  }),
+  upVotesBy: PropTypes.arrayOf(PropTypes.string),
+  downVotesBy: PropTypes.arrayOf(PropTypes.string),
+};
+
+const threadDetailShape = {
+  ...threadShape,
+  ownerId: PropTypes.string, // Optional
+  owner: {
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    avatar: PropTypes.string.isRequired,
+  },
+  upVotesBy: PropTypes.arrayOf(PropTypes.string),
+  downVotesBy: PropTypes.arrayOf(PropTypes.string),
+  comments: PropTypes.arrayOf(PropTypes.shape(commentShape)),
+};
+
+export { userShape, threadShape, commentShape, threadDetailShape };

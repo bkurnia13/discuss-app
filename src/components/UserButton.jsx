@@ -1,11 +1,9 @@
 import React from 'react';
-import { useNavigate } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { toast } from 'sonner';
 import { asyncUnsetAuthUser } from '../states/authUser/action';
 
 export default function UserButton() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   return (
@@ -29,7 +27,6 @@ export default function UserButton() {
               document.activeElement.blur();
               dispatch(asyncUnsetAuthUser());
               toast.success('user logged out');
-              navigate('/');
             }}
           >
             Logout

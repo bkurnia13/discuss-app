@@ -1,18 +1,35 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import LikeIcon from '../assets/icons/LikeIcon';
 import DislikeIcon from '../assets/icons/DislikeIcon';
 
-export default function CommentItemFooter() {
+function CommentItemFooter({ authUser, upVotesBy, downVotesBy }) {
   return (
     <div className="mt-2">
-      <button className="btn btn-sm btn-primary">
+      <button
+        className={
+          upVotesBy.includes(authUser) ? 'btn btn-sm btn-primary' : 'btn btn-sm text-primary'
+        }
+      >
         <LikeIcon />
-        <span>999</span>
+        <span>{upVotesBy.length}</span>
       </button>
-      <button className="btn btn-sm text-error">
+      <button
+        className={
+          downVotesBy.includes(authUser) ? 'btn btn-sm btn-error' : 'btn btn-sm text-error'
+        }
+      >
         <DislikeIcon />
-        <span>1.2K</span>
+        <span>{downVotesBy.length}</span>
       </button>
     </div>
   );
 }
+
+CommentItemFooter.propTypes = {
+  authUser: PropTypes.string,
+  upVotesBy: PropTypes.arrayOf(PropTypes.string),
+  downVotesBy: PropTypes.arrayOf(PropTypes.string),
+};
+
+export default CommentItemFooter;

@@ -133,6 +133,24 @@ const api = (() => {
     return threads;
   }
 
+  async function getThreadDetail(id) {
+    const response = await fetch(`${BASE_URL}/threads/${id}`);
+
+    const responseJson = await response.json();
+
+    const { status, message } = responseJson;
+
+    if (status !== 'success') {
+      console.log(message);
+    }
+
+    const {
+      data: { detailThread },
+    } = responseJson;
+
+    return detailThread;
+  }
+
   return {
     putAccessToken,
     getAccessToken,
@@ -141,6 +159,7 @@ const api = (() => {
     getOwnProfile,
     getAllUsers,
     getAllThreads,
+    getThreadDetail,
   };
 })();
 

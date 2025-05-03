@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { userShape } from '../utils/propShape';
 import { postedAt } from '../utils/time';
 
-function DiscussItemHeader({ name, email, avatar, createdAt }) {
+function DiscussItemHeader({ id, name, email, avatar, createdAt }) {
   return (
     <div className="flex justify-between items-center px-6 py-4 border-b border-base-300">
       <div className="flex gap-3 items-center">
@@ -14,7 +14,7 @@ function DiscussItemHeader({ name, email, avatar, createdAt }) {
         </div>
         <div>
           <span className="block font-bold text-base">{name}</span>
-          <span className="block text-sm text-neutral-content">{email}</span>
+          <span className="block text-sm text-neutral-content">{email ?? id}</span>
         </div>
       </div>
       <div>
