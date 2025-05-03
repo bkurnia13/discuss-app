@@ -8,9 +8,9 @@ export default function AddComment() {
           className="textarea textarea-primary textarea-md w-full"
           placeholder="Beri komentar"
         ></textarea>
-        <button type="submit" className="btn btn-primary w-full mt-3" disabled>
-          <span className="loading loading-spinner"></span>
-          {/* Kirim */}
+        <button type="submit" className="btn btn-primary w-full mt-3">
+          {/* <span className="loading loading-spinner"></span> */}
+          <span className="text-sm">Kirim</span>
         </button>
       </form>
     </div>

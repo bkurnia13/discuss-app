@@ -4,8 +4,6 @@ import { commentShape } from '../utils/propShape';
 import { postedAt } from '../utils/time';
 
 function CommentItemheader({ owner, createdAt }) {
-  console.log(owner);
-
   return (
     <div className="flex justify-between items-center">
       <div className="flex gap-3 items-center">

@@ -20,7 +20,7 @@ function DiscussItemBody({ id, title, body }) {
         )}
       </h2>
       <div
-        className="pt-2 min-h-24 max-h-24 overflow-ellipsis line-clamp-4"
+        className={isDetailPage ? 'pt-2' : 'pt-2 min-h-24 max-h-24 overflow-ellipsis line-clamp-4'}
         dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(body) }}
       ></div>
     </div>

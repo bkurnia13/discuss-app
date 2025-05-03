@@ -2,6 +2,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { asyncPopulateUsersAndThreads } from '../states/shared/action';
+import { sortCategoryFromThreads } from '../states/category/action';
 import PopularCategory from '../components/PopularCategory';
 import DiscussItem from '../components/DiscussItem';
 import DiscussItemSkeleton from '../components/DiscussItemSkeleton';
@@ -14,6 +15,10 @@ export default function HomePage() {
   useEffect(() => {
     dispatch(asyncPopulateUsersAndThreads());
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(sortCategoryFromThreads(threads));
+  }, [threads]);
 
   const threadList = threads.map((thread) => ({
     ...thread,

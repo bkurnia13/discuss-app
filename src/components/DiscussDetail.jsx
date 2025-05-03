@@ -19,7 +19,7 @@ export default function DiscussDetail() {
   }, [id, dispatch]);
 
   return (
-    <div className="card w-full lg:w-2/3 bg-base-200 card-md shadow-md my-6 mx-auto">
+    <div className="card w-full lg:w-2/3 bg-base-200 card-md shadow-md mt-6 mb-32 mx-auto">
       {threadDetail && (
         <div className="card-body p-0 gap-0">
           <DiscussItemHeader {...threadDetail.owner} createdAt={threadDetail.createdAt} />
