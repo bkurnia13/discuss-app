@@ -88,8 +88,6 @@ const api = (() => {
 
     if (status !== 'success') {
       console.log(message);
-    } else {
-      toast.success(message);
     }
 
     const {
@@ -99,11 +97,50 @@ const api = (() => {
     return user;
   }
 
+  async function getAllUsers() {
+    const response = await fetch(`${BASE_URL}/users`);
+
+    const responseJson = await response.json();
+
+    const { status, message } = responseJson;
+
+    if (status !== 'success') {
+      console.log(message);
+    }
+
+    const {
+      data: { users },
+    } = responseJson;
+
+    return users;
+  }
+
+  async function getAllThreads() {
+    const response = await fetch(`${BASE_URL}/threads`);
+
+    const responseJson = await response.json();
+
+    const { status, message } = responseJson;
+
+    if (status !== 'success') {
+      console.log(message);
+    }
+
+    const {
+      data: { threads },
+    } = responseJson;
+
+    return threads;
+  }
+
   return {
     putAccessToken,
+    getAccessToken,
     register,
     login,
     getOwnProfile,
+    getAllUsers,
+    getAllThreads,
   };
 })();
 

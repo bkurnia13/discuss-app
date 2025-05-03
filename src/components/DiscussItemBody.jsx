@@ -1,14 +1,21 @@
 import React from 'react';
+import { threadShape } from '../utils/propShape';
+import DOMPurify from 'dompurify';
 
-export default function DiscussItemBody() {
+function DiscussItemBody({ id, title, body }) {
   return (
-    <div className="p-6 border-b border-base-300">
-      <h2 className="card-title">Halo! Selamat datang dan silakan perkenalkan diri kamu.</h2>
-      <p className="pt-2">
-        Bagaimana kabarmu? Semoga baik-baik saja ya. Sekali lagi saya ucapkan selamat datang
-        semuanya! Seperti yang sudah disampaikan sebelumnya, pada diskusi ini kamu bisa
-        memperkenalkan diri kamu dan juga berkenalan dengan teman sekelas lainnya...
-      </p>
+    <div className="px-6 py-4 border-b border-base-300">
+      <h2 className="card-title">
+        <a href={id}>{title}</a>
+      </h2>
+      <div
+        className="pt-2 min-h-24 max-h-24 overflow-ellipsis line-clamp-4"
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(body) }}
+      ></div>
     </div>
   );
 }
+
+DiscussItemBody.propTypes = { ...threadShape };
+
+export default DiscussItemBody;

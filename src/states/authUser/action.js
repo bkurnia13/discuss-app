@@ -16,8 +16,6 @@ function setAuthUserActionCreator(authUser) {
   };
 }
 
-//When called with an action of type "SET_AUTH_USER", the slice reducer for key "authUser" returned undefined. To ignore an action, you must explicitly return the previous state. If you want this reducer to hold no value, you can return null instead of undefined.
-
 function unsetAuthUserActionCreator() {
   return {
     type: ActionType.UNSET_AUTH_USER,
@@ -33,10 +31,10 @@ function asyncSetAuthUser({ email, password }) {
 
     try {
       const token = await api.login({ email, password });
-      api.putAccessToken(token);
-      const authUser = await api.getOwnProfile();
 
       if (token) {
+        api.putAccessToken(token);
+        const authUser = await api.getOwnProfile();
         dispatch(setAuthUserActionCreator(authUser));
       }
     } catch (error) {

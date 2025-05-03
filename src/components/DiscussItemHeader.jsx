@@ -1,23 +1,30 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { userShape } from '../utils/propShape';
+import { postedAt } from '../utils/time';
 
-export default function DiscussItemHeader() {
+function DiscussItemHeader({ name, email, avatar, createdAt }) {
   return (
-    <div className="flex justify-between items-center p-6 border-b border-base-300">
+    <div className="flex justify-between items-center px-6 py-4 border-b border-base-300">
       <div className="flex gap-3 items-center">
         <div className="avatar">
           <div className="ring-primary ring-offset-base-100 w-12 h-12 rounded-full ring ring-offset-2">
-            <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+            <img src={avatar} />
           </div>
         </div>
         <div>
-          <span className="block font-bold text-base">Nama User</span>
-          <span className="block text-sm text-neutral-content">user.name</span>
+          <span className="block font-bold text-base">{name}</span>
+          <span className="block text-sm text-neutral-content">{email}</span>
         </div>
       </div>
       <div>
         <span className="block text-sm text-neutral-content">Diposting</span>
-        <span className="block text-sm text-neutral-content">123 hari lalu</span>
+        <span className="block text-sm text-neutral-content">{postedAt(createdAt)}</span>
       </div>
     </div>
   );
 }
+
+DiscussItemHeader.propTypes = { ...userShape, createdAt: PropTypes.string.isRequired };
+
+export default DiscussItemHeader;

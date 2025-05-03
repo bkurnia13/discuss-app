@@ -1,11 +1,30 @@
 import React from 'react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router';
-import { useSelector } from 'react-redux';
+import { setAuthUserActionCreator } from '../states/authUser/action';
+import { unsetAuthUserActionCreator } from '../states/authUser/action';
+import api from '../utils/api';
 import ThemeSwitcher from './ThemeSwitcher';
 import UserButton from './UserButton';
 
 export default function Navbar() {
+  const dispatch = useDispatch();
   const { authUser } = useSelector((states) => states);
+  const token = api.getAccessToken();
+
+  const setAuthUser = async () => {
+    if (token) {
+      const authUser = await api.getOwnProfile();
+      dispatch(setAuthUserActionCreator(authUser));
+    } else {
+      dispatch(unsetAuthUserActionCreator());
+    }
+  };
+
+  useEffect(() => {
+    setAuthUser();
+  }, []);
 
   return (
     <div className="navbar flex justify-center w-full sticky top-0 z-30 bg-base-100/50 [transform:translate3d(0,0,0)] backdrop-blur shadow-md px-3 py-6 sm:px-6 md:px-12 lg:px-24">
