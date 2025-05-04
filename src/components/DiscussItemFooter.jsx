@@ -2,9 +2,9 @@ import React from 'react';
 import { useLocation, Link } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { asyncVoteThread } from '../states/threads/action';
-import { asyncUpVoteThreadDetail } from '../states/threadDetail/action';
+import { asyncVoteThreadDetail } from '../states/threadDetail/action';
 import { threadShape } from '../utils/propShape';
-import { VoteThreadAction } from '../states/threads/action';
+import { VoteAction } from '../states/threads/action';
 import LikeIcon from '../assets/icons/LikeIcon';
 import DislikeIcon from '../assets/icons/DislikeIcon';
 import CommentIcon from '../assets/icons/CommentIcon';
@@ -17,14 +17,14 @@ function DiscussItemFooter({ id, upVotesBy, downVotesBy, totalComments, category
   const isDetailPage = pathname.includes('/threads/');
   const checkUpVote = upVotesBy.includes(authUser.id);
   const checkDownVote = downVotesBy.includes(authUser.id);
-  const actionUpVote = checkUpVote ? VoteThreadAction.NEUTRAL_VOTE : VoteThreadAction.UP_VOTE;
-  const actionDownVote = checkDownVote ? VoteThreadAction.NEUTRAL_VOTE : VoteThreadAction.DOWN_VOTE;
+  const actionUpVote = checkUpVote ? VoteAction.NEUTRAL_VOTE : VoteAction.UP_VOTE;
+  const actionDownVote = checkDownVote ? VoteAction.NEUTRAL_VOTE : VoteAction.DOWN_VOTE;
 
   const onUpVoteThread = () => {
     const threadId = id;
 
     if (isDetailPage) {
-      dispatch(asyncUpVoteThreadDetail(threadId));
+      dispatch(asyncVoteThreadDetail(actionUpVote));
     } else {
       dispatch(asyncVoteThread({ threadId, action: actionUpVote }));
     }
@@ -34,7 +34,7 @@ function DiscussItemFooter({ id, upVotesBy, downVotesBy, totalComments, category
     const threadId = id;
 
     if (isDetailPage) {
-      dispatch(asyncUpVoteThreadDetail(threadId));
+      dispatch(asyncVoteThreadDetail(actionDownVote));
     } else {
       dispatch(asyncVoteThread({ threadId, action: actionDownVote }));
     }

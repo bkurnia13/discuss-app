@@ -4,7 +4,7 @@ import { commentShape } from '../utils/propShape';
 import CommentItemHeader from './CommentItemHeader';
 import CommentItemFooter from './CommentItemFooter';
 
-function CommentItem({ authUser, content, createdAt, owner, upVotesBy, downVotesBy }) {
+function CommentItem({ id, content, createdAt, owner, upVotesBy, downVotesBy }) {
   return (
     <div className="border-b border-base-300 pb-3 mt-3">
       <CommentItemHeader owner={owner} createdAt={createdAt} />
@@ -12,7 +12,7 @@ function CommentItem({ authUser, content, createdAt, owner, upVotesBy, downVotes
         className="text-sm mt-2"
         dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(content) }}
       ></div>
-      <CommentItemFooter authUser={authUser} upVotesBy={upVotesBy} downVotesBy={downVotesBy} />
+      <CommentItemFooter commentId={id} upVotesBy={upVotesBy} downVotesBy={downVotesBy} />
     </div>
   );
 }

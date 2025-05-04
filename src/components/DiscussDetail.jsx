@@ -60,7 +60,7 @@ export default function DiscussDetail() {
         <div className="px-6 py-4">
           <span className="font-semibold text-sm">{`Komentar (${threadDetail.comments.length})`}</span>
           {threadDetail.comments.map((comment) => (
-            <CommentItem key={comment.id} authUser={authUser} {...comment} />
+            <CommentItem key={comment.id} {...comment} />
           ))}
         </div>
       </div>

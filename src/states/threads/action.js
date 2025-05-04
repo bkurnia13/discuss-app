@@ -10,7 +10,7 @@ const ActionType = {
   NEUTRAL_VOTE_THREAD: 'NEUTRAL_VOTE_THREAD',
 };
 
-const VoteThreadAction = {
+const VoteAction = {
   UP_VOTE: 'up-vote',
   DOWN_VOTE: 'down-vote',
   NEUTRAL_VOTE: 'neutral-vote',
@@ -35,18 +35,18 @@ function addThreadActionCreator(thread) {
 }
 
 function voteThreadActionCreator({ userId, threadId, action }) {
-  let actionType = '';
+  let setActionType = '';
 
-  if (action === VoteThreadAction.UP_VOTE) {
-    actionType = ActionType.UP_VOTE_THREAD;
-  } else if (action === VoteThreadAction.DOWN_VOTE) {
-    actionType = ActionType.DOWN_VOTE_THREAD;
+  if (action === VoteAction.UP_VOTE) {
+    setActionType = ActionType.UP_VOTE_THREAD;
+  } else if (action === VoteAction.DOWN_VOTE) {
+    setActionType = ActionType.DOWN_VOTE_THREAD;
   } else {
-    actionType = ActionType.NEUTRAL_VOTE_THREAD;
+    setActionType = ActionType.NEUTRAL_VOTE_THREAD;
   }
 
   return {
-    type: actionType,
+    type: setActionType,
     payload: {
       userId,
       threadId,
@@ -80,18 +80,18 @@ function asyncVoteThread({ threadId, action }) {
     const thread = threads.find((thread) => thread.id === threadId);
     const checkUpVote = thread.upVotesBy.includes(authUser.id);
     const checkDownVote = thread.downVotesBy.includes(authUser.id);
-    const checkNeutral = action === VoteThreadAction.NEUTRAL_VOTE;
+    const checkNeutral = action === VoteAction.NEUTRAL_VOTE;
 
-    let reverseAction = VoteThreadAction.NEUTRAL_VOTE;
+    let reverseAction = VoteAction.NEUTRAL_VOTE;
 
     // When click neutral_up_vote or click down_vote when already up_vote
     if ((checkNeutral && checkUpVote) || (!checkNeutral && checkUpVote)) {
-      reverseAction = VoteThreadAction.UP_VOTE;
+      reverseAction = VoteAction.UP_VOTE;
     }
 
     // When click neutral_down_vote or click up_vote when already down_vote
     if ((checkNeutral && checkDownVote) || (!checkNeutral && checkDownVote)) {
-      reverseAction = VoteThreadAction.DOWN_VOTE;
+      reverseAction = VoteAction.DOWN_VOTE;
     }
 
     // optimistically apply action
@@ -102,8 +102,6 @@ function asyncVoteThread({ threadId, action }) {
     } catch (error) {
       toast.error(error.message);
 
-      console.log(reverseAction);
-
       //reverse action
       dispatch(voteThreadActionCreator({ userId: authUser.id, threadId, action: reverseAction }));
     }
@@ -112,7 +110,7 @@ function asyncVoteThread({ threadId, action }) {
 
 export {
   ActionType,
-  VoteThreadAction,
+  VoteAction,
   receiveThreadsActionCreator,
   addThreadActionCreator,
   asyncAddThread,

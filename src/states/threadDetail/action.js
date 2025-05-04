@@ -1,4 +1,6 @@
+import { toast } from 'sonner';
 import api from '../../utils/api';
+import { VoteAction } from '../threads/action';
 import { isLoadingButtonActionCreator } from '../loading/action';
 import { isLoadingSkeletonActionCreator } from '../loading/action';
 
@@ -7,6 +9,11 @@ const ActionType = {
   CLEAR_THREAD_DETAIL: 'CLEAR_THREAD_DETAIL',
   ADD_COMMENT: 'ADD_COMMENT',
   UP_VOTE_THREAD_DETAIL: 'UP_VOTE_THREAD_DETAIL',
+  DOWN_VOTE_THREAD_DETAIL: 'DOWN_VOTE_THREAD_DETAIL',
+  NEUTRAL_VOTE_THREAD_DETAIL: 'NEUTRAL_VOTE_THREAD_DETAIL',
+  UP_VOTE_COMMENT: 'UP_VOTE_COMMENT',
+  DOWN_VOTE_COMMENT: 'DOWN_VOTE_COMMENT',
+  NEUTRAL_VOTE_COMMENT: 'NEUTRAL_VOTE_COMMENT',
 };
 
 function receiveThreadDetailActionCreator(threadDetail) {
@@ -33,11 +40,41 @@ function addCommentActionCreator(comment) {
   };
 }
 
-function upVoteThreadDetailActionCreator(userId) {
+function voteThreadDetailActionCreator({ userId, action }) {
+  let setActionType = '';
+
+  if (action === VoteAction.UP_VOTE) {
+    setActionType = ActionType.UP_VOTE_THREAD_DETAIL;
+  } else if (action === VoteAction.DOWN_VOTE) {
+    setActionType = ActionType.DOWN_VOTE_THREAD_DETAIL;
+  } else {
+    setActionType = ActionType.NEUTRAL_VOTE_THREAD_DETAIL;
+  }
+
   return {
-    type: ActionType.UP_VOTE_THREAD,
+    type: setActionType,
     payload: {
       userId,
+    },
+  };
+}
+
+function voteCommentActionCreator({ userId, commentId, action }) {
+  let setActionType = '';
+
+  if (action === VoteAction.UP_VOTE) {
+    setActionType = ActionType.UP_VOTE_COMMENT;
+  } else if (action === VoteAction.DOWN_VOTE) {
+    setActionType = ActionType.DOWN_VOTE_COMMENT;
+  } else {
+    setActionType = ActionType.NEUTRAL_VOTE_COMMENT;
+  }
+
+  return {
+    type: setActionType,
+    payload: {
+      userId,
+      commentId,
     },
   };
 }
@@ -76,13 +113,79 @@ function asyncAddComment({ threadId, content }) {
   };
 }
 
-function asyncUpVoteThreadDetail(threadId) {
-  return async (dispatch) => {
+function asyncVoteThreadDetail(action) {
+  return async (dispatch, getState) => {
+    const authUser = getState().authUser;
+    const threadDetail = getState().threadDetail;
+    const checkUpVote = threadDetail.upVotesBy.includes(authUser.id);
+    const checkDownVote = threadDetail.downVotesBy.includes(authUser.id);
+    const checkNeutral = action === VoteAction.NEUTRAL_VOTE;
+
+    let reverseAction = VoteAction.NEUTRAL_VOTE;
+
+    // When click neutral_up_vote or click down_vote when already up_vote
+    if ((checkNeutral && checkUpVote) || (!checkNeutral && checkUpVote)) {
+      reverseAction = VoteAction.UP_VOTE;
+    }
+
+    // When click neutral_down_vote or click up_vote when already down_vote
+    if ((checkNeutral && checkDownVote) || (!checkNeutral && checkDownVote)) {
+      reverseAction = VoteAction.DOWN_VOTE;
+    }
+
+    // optimistically apply action
+    dispatch(voteThreadDetailActionCreator({ userId: authUser.id, action }));
+
     try {
-      const { userId } = await api.upVoteThread(threadId);
-      dispatch(upVoteThreadDetailActionCreator(userId));
+      await api.voteThread({ threadId: threadDetail.id, action: action });
     } catch (error) {
-      console.log(error.message);
+      toast.error(error.message);
+
+      //reverse action
+      dispatch(voteThreadDetailActionCreator({ userId: authUser.id, action: reverseAction }));
+    }
+  };
+}
+
+function asyncVoteComment({ commentId, action }) {
+  return async (dispatch, getState) => {
+    const authUser = getState().authUser;
+    const threadDetail = getState().threadDetail;
+
+    const checkUpVote = threadDetail.comments
+      .find((comment) => comment.id === commentId)
+      .upVotesBy.includes(authUser.id);
+
+    const checkDownVote = threadDetail.comments
+      .find((comment) => comment.id === commentId)
+      .downVotesBy.includes(authUser.id);
+
+    const checkNeutral = action === VoteAction.NEUTRAL_VOTE;
+
+    let reverseAction = VoteAction.NEUTRAL_VOTE;
+
+    // When click neutral_up_vote or click down_vote when already up_vote
+    if ((checkNeutral && checkUpVote) || (!checkNeutral && checkUpVote)) {
+      reverseAction = VoteAction.UP_VOTE;
+    }
+
+    // When click neutral_down_vote or click up_vote when already down_vote
+    if ((checkNeutral && checkDownVote) || (!checkNeutral && checkDownVote)) {
+      reverseAction = VoteAction.DOWN_VOTE;
+    }
+
+    // optimistically apply action
+    dispatch(voteCommentActionCreator({ userId: authUser.id, commentId, action }));
+
+    try {
+      await api.voteCommnet({ threadId: threadDetail.id, commentId, action });
+    } catch (error) {
+      toast.error(error.message);
+
+      //reverse action
+      dispatch(
+        voteCommentActionCreator({ threadId: threadDetail.id, commentId, action: reverseAction })
+      );
     }
   };
 }
@@ -92,5 +195,6 @@ export {
   receiveThreadDetailActionCreator,
   asyncReceiveThreadDetail,
   asyncAddComment,
-  asyncUpVoteThreadDetail,
+  asyncVoteThreadDetail,
+  asyncVoteComment,
 };
