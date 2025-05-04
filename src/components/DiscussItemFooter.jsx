@@ -1,29 +1,58 @@
 import React from 'react';
 import { useLocation, Link } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
+import { asyncVoteThread } from '../states/threads/action';
+import { asyncUpVoteThreadDetail } from '../states/threadDetail/action';
 import { threadShape } from '../utils/propShape';
+import { VoteThreadAction } from '../states/threads/action';
 import LikeIcon from '../assets/icons/LikeIcon';
 import DislikeIcon from '../assets/icons/DislikeIcon';
 import CommentIcon from '../assets/icons/CommentIcon';
 
-function DiscussItemFooter({ authUser, id, upVotesBy, downVotesBy, totalComments, category }) {
+function DiscussItemFooter({ id, upVotesBy, downVotesBy, totalComments, category }) {
+  const dispatch = useDispatch();
+  const authUser = useSelector((states) => states.authUser);
+
   const { pathname } = useLocation();
   const isDetailPage = pathname.includes('/threads/');
+  const checkUpVote = upVotesBy.includes(authUser.id);
+  const checkDownVote = downVotesBy.includes(authUser.id);
+  const actionUpVote = checkUpVote ? VoteThreadAction.NEUTRAL_VOTE : VoteThreadAction.UP_VOTE;
+  const actionDownVote = checkDownVote ? VoteThreadAction.NEUTRAL_VOTE : VoteThreadAction.DOWN_VOTE;
+
+  const onUpVoteThread = () => {
+    const threadId = id;
+
+    if (isDetailPage) {
+      dispatch(asyncUpVoteThreadDetail(threadId));
+    } else {
+      dispatch(asyncVoteThread({ threadId, action: actionUpVote }));
+    }
+  };
+
+  const onDownVoteThread = () => {
+    const threadId = id;
+
+    if (isDetailPage) {
+      dispatch(asyncUpVoteThreadDetail(threadId));
+    } else {
+      dispatch(asyncVoteThread({ threadId, action: actionDownVote }));
+    }
+  };
 
   return (
     <div className="flex flex-wrap justify-between items-center px-6 py-4">
       <div>
         <button
-          className={
-            upVotesBy.includes(authUser) ? 'btn btn-sm btn-primary' : 'btn btn-sm text-primary'
-          }
+          className={checkUpVote ? 'btn btn-sm btn-primary' : 'btn btn-sm text-primary'}
+          onClick={() => onUpVoteThread()}
         >
           <LikeIcon />
           <span>{upVotesBy.length}</span>
         </button>
         <button
-          className={
-            downVotesBy.includes(authUser) ? 'btn btn-sm btn-error' : 'btn btn-sm text-error'
-          }
+          className={checkDownVote ? 'btn btn-sm btn-error' : 'btn btn-sm text-error'}
+          onClick={() => onDownVoteThread()}
         >
           <DislikeIcon />
           <span>{downVotesBy.length}</span>

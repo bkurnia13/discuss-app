@@ -1,11 +1,11 @@
 import api from '../../utils/api';
-import { isLoadingActionCreator } from '../loading/action';
+import { isLoadingSkeletonActionCreator } from '../loading/action';
 import { receiveUsersActionCreator } from '../user/action';
 import { receiveThreadsActionCreator } from '../threads/action';
 
 function asyncPopulateUsersAndThreads() {
   return async (dispatch) => {
-    dispatch(isLoadingActionCreator(true));
+    dispatch(isLoadingSkeletonActionCreator(true));
 
     try {
       const users = await api.getAllUsers();
@@ -17,7 +17,7 @@ function asyncPopulateUsersAndThreads() {
       console.log(error.message);
     }
 
-    dispatch(isLoadingActionCreator(false));
+    dispatch(isLoadingSkeletonActionCreator(false));
   };
 }
 

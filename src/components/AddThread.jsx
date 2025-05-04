@@ -21,7 +21,6 @@ export default function AddThread() {
   const onAddThread = ({ title, body, category }) => {
     dispatch(asyncAddThread({ title, body, category }));
     resetForm();
-    document.getElementById('create-new-thread').close();
   };
 
   return (
@@ -47,7 +46,7 @@ export default function AddThread() {
                 placeholder="Judul"
                 className="input input-md input-primary w-full"
                 value={title}
-                disabled={isLoading}
+                disabled={isLoading.button}
                 onChange={onTitleChange}
               />
             </label>
@@ -58,7 +57,7 @@ export default function AddThread() {
                 placeholder="Kategori"
                 className="input input-md input-primary w-full"
                 value={category}
-                disabled={isLoading}
+                disabled={isLoading.button}
                 onChange={onCategoryChange}
               />
             </label>
@@ -66,16 +65,16 @@ export default function AddThread() {
               className="textarea textarea-primary mt-3 w-full"
               placeholder="Tulis pesan disini"
               value={body}
-              disabled={isLoading}
+              disabled={isLoading.button}
               onChange={onBodyChange}
             ></textarea>
             <button
               type="button"
               className="btn btn-primary mt-3 w-full"
-              disabled={isLoading}
+              disabled={isLoading.button}
               onClick={() => onAddThread({ title, body, category })}
             >
-              {isLoading ? (
+              {isLoading.button ? (
                 <span className="loading loading-spinner"></span>
               ) : (
                 <span className="text-sm">Buat</span>

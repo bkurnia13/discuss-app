@@ -10,7 +10,7 @@ import UserButton from './UserButton';
 
 export default function Navbar() {
   const dispatch = useDispatch();
-  const { authUser } = useSelector((states) => states);
+  const authUser = useSelector((states) => states.authUser);
   const token = api.getAccessToken();
 
   const setAuthUser = async () => {
@@ -29,7 +29,12 @@ export default function Navbar() {
   return (
     <div className="navbar flex justify-center w-full sticky top-0 z-30 bg-base-100/50 [transform:translate3d(0,0,0)] backdrop-blur shadow-md px-3 py-6 sm:px-6 md:px-12 lg:px-24">
       <div className="navbar-start">
-        <p className="text-4xl font-bold text-primary">DiscussApp</p>
+        <Link
+          to="/"
+          className="text-4xl font-bold text-primary hover:text-blue-400 hover:dark:text-green-600"
+        >
+          DiscussApp
+        </Link>
       </div>
       <div className="navbar-end">
         <ThemeSwitcher />

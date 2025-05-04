@@ -181,6 +181,60 @@ const api = (() => {
     return thread;
   }
 
+  async function createComment({ threadId, content }) {
+    const response = await _fetchWithAuth(`${BASE_URL}/threads/${threadId}/comments`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        content,
+      }),
+    });
+
+    const responseJson = await response.json();
+
+    const { status, message } = responseJson;
+
+    if (status !== 'success') {
+      toast.error(message);
+    } else {
+      toast.success(message);
+    }
+
+    const {
+      data: { comment },
+    } = responseJson;
+
+    return comment;
+  }
+
+  async function voteThread({ threadId, action }) {
+    const response = await _fetchWithAuth(`${BASE_URL}/threads/${threadId}/${action}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({}),
+    });
+
+    const responseJson = await response.json();
+
+    const { status, message } = responseJson;
+
+    if (status !== 'success') {
+      toast.error(message);
+    } else {
+      toast.success(message);
+    }
+
+    const {
+      data: { vote },
+    } = responseJson;
+
+    return vote;
+  }
+
   return {
     putAccessToken,
     getAccessToken,
@@ -191,6 +245,8 @@ const api = (() => {
     getAllThreads,
     getThreadDetail,
     createThread,
+    createComment,
+    voteThread,
   };
 })();
 

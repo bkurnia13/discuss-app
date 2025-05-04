@@ -11,7 +11,8 @@ import PasswordIcon from '../assets/icons/PasswordIcon';
 export default function LoginForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { isLoading, authUser } = useSelector((states) => states);
+  const isLoading = useSelector((states) => states.isLoading);
+  const authUser = useSelector((states) => states.authUser);
 
   const [email, onEmailChange, setEmail] = useInput('');
   const [password, onPasswordChange, setPassword] = useInput('');
@@ -39,7 +40,7 @@ export default function LoginForm() {
         placeholder="Email"
         value={email}
         onChange={onEmailChange}
-        disabled={isLoading}
+        disabled={isLoading.button}
       >
         <EmailIcon />
       </InputField>
@@ -48,7 +49,7 @@ export default function LoginForm() {
         placeholder="Password"
         value={password}
         onChange={onPasswordChange}
-        disabled={isLoading}
+        disabled={isLoading.button}
       >
         <PasswordIcon />
       </InputField>
@@ -56,9 +57,9 @@ export default function LoginForm() {
         type="button"
         onClick={() => onLogin({ email, password })}
         className="btn btn-primary w-full lg:w-2/3"
-        disabled={isLoading}
+        disabled={isLoading.button}
       >
-        {isLoading ? (
+        {isLoading.button ? (
           <span className="loading loading-spinner"></span>
         ) : (
           <span className="text-sm">LOGIN</span>

@@ -1,5 +1,5 @@
 import { toast } from 'sonner';
-import { isLoadingActionCreator } from '../loading/action';
+import { isLoadingButtonActionCreator } from '../loading/action';
 import api from '../../utils/api';
 
 const ActionType = {
@@ -17,7 +17,7 @@ function receiveUsersActionCreator(users) {
 
 function asyncRegisterUser({ name, email, password }) {
   return async (dispatch) => {
-    dispatch(isLoadingActionCreator(true));
+    dispatch(isLoadingButtonActionCreator(true));
 
     try {
       await api.register({ name, email, password });
@@ -25,7 +25,7 @@ function asyncRegisterUser({ name, email, password }) {
       toast.error(error.message);
     }
 
-    dispatch(isLoadingActionCreator(false));
+    dispatch(isLoadingButtonActionCreator(false));
   };
 }
 

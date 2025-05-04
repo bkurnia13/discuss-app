@@ -8,8 +8,8 @@ import EmailIcon from '../assets/icons/EmailIcon';
 import PasswordIcon from '../assets/icons/PasswordIcon';
 
 export default function RegisterForm() {
-  const { isLoading } = useSelector((states) => states);
   const dispatch = useDispatch();
+  const isLoading = useSelector((states) => states.isLoading);
 
   const [name, onNameChange, setName] = useInput('');
   const [email, onEmailChange, setEmail] = useInput('');
@@ -32,7 +32,7 @@ export default function RegisterForm() {
         type="text"
         placeholder="Nama"
         value={name}
-        disabled={isLoading}
+        disabled={isLoading.button}
         onChange={onNameChange}
       >
         <UserIcon />
@@ -41,7 +41,7 @@ export default function RegisterForm() {
         type="email"
         placeholder="Email"
         value={email}
-        disabled={isLoading}
+        disabled={isLoading.button}
         onChange={onEmailChange}
       >
         <EmailIcon />
@@ -50,7 +50,7 @@ export default function RegisterForm() {
         type="password"
         placeholder="Password"
         value={password}
-        disabled={isLoading}
+        disabled={isLoading.button}
         onChange={onPasswordChange}
       >
         <PasswordIcon />
@@ -59,9 +59,9 @@ export default function RegisterForm() {
         type="button"
         onClick={() => onRegister({ name, email, password })}
         className="btn btn-primary w-full lg:w-2/3"
-        disabled={isLoading}
+        disabled={isLoading.button}
       >
-        {isLoading ? (
+        {isLoading.button ? (
           <span className="loading loading-spinner"></span>
         ) : (
           <span className="text-sm">REGISTER</span>

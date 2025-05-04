@@ -12,7 +12,7 @@ export default function Layout() {
         <Outlet />
       </main>
       <Footer />
-      <Toaster position="top-center" richColors closeButton />
+      <Toaster position="top-center" expand richColors closeButton />
     </>
   );
 }

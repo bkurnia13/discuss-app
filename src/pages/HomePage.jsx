@@ -30,7 +30,7 @@ export default function HomePage() {
     <>
       <PopularCategory />
       <div className="grid lg:grid-cols-2 lg:gap-x-4 mb-32">
-        {isLoading ? (
+        {isLoading.skeleton ? (
           <>
             <DiscussItemSkeleton key="discuss-item-skeleton-1" />
             <DiscussItemSkeleton key="discuss-item-skeleton-2" />

@@ -1,12 +1,14 @@
 import { ActionType } from './action';
 
-function isloadingReducer(isloading = false, action = {}) {
+function isLoadingReducer(isLoading = { button: false, skeleton: false }, action = {}) {
   switch (action.type) {
-    case ActionType.SET_IS_LOADING:
-      return action.payload.isloading;
+    case ActionType.SET_IS_LOADING_BUTTON:
+      return { ...isLoading, button: action.payload.isLoading };
+    case ActionType.SET_IS_LOADING_SKELETON:
+      return { ...isLoading, skeleton: action.payload.isLoading };
     default:
-      return isloading;
+      return isLoading;
   }
 }
 
-export default isloadingReducer;
+export default isLoadingReducer;
