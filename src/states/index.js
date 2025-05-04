@@ -6,6 +6,8 @@ import authUserReducer from './authUser/reducer';
 import threadsReducer from './threads/reducer';
 import threadDetailReducer from './threadDetail/reducer';
 import categoriesReducer from './category/reducer';
+import activeCategoryReducer from './activeCategory/reducer';
+import filterThreadsReducer from './filterThreads/reducer';
 import leaderboardReducer from './leaderboard/reducer';
 
 const store = configureStore({
@@ -16,9 +18,10 @@ const store = configureStore({
     threads: threadsReducer,
     threadDetail: threadDetailReducer,
     categories: categoriesReducer,
+    activeCategory: activeCategoryReducer,
+    filterThreads: filterThreadsReducer,
     leaderboard: leaderboardReducer,
   },
-  // middleware: () => new Tuple(thunk, userAuthCheck),
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(userAuthCheck),
 });
 

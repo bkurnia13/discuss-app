@@ -1,9 +1,16 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setActiveCategoryActionCreator } from '../states/activeCategory/action';
 
 export default function PopularCategory() {
+  const dispatch = useDispatch();
   const isLoading = useSelector((states) => states.isLoading);
   const categories = useSelector((states) => states.categories);
+  const activeCategory = useSelector((states) => states.activeCategory);
+
+  const onCategoryClick = () => {
+    dispatch(setActiveCategoryActionCreator(event.target.dataset.category));
+  };
 
   return (
     <div className="card w-full bg-base-200 card-md shadow-md my-6">
@@ -14,12 +21,19 @@ export default function PopularCategory() {
         ) : (
           <div>
             {categories.map((category) => (
-              <input
+              <button
                 key={category.name}
-                type="checkbox"
-                aria-label={`#${category.name} (${category.count})`}
-                className="btn btn-sm mr-2 border border-primary text-primary checked:text-base-200"
-              />
+                type="button"
+                className={
+                  activeCategory.includes(category.name)
+                    ? 'category-button-active'
+                    : 'category-button-class'
+                }
+                data-category={category.name}
+                onClick={() => onCategoryClick()}
+              >
+                {`#${category.name} (${category.count})`}
+              </button>
             ))}
           </div>
         )}

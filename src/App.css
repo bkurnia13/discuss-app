@@ -11,3 +11,11 @@
 .menu-default-class {
   @apply flex flex-col items-center px-6 py-1 rounded-md;
 }
+
+.category-button-class {
+  @apply btn btn-sm mr-2 border border-primary text-primary;
+}
+
+.category-button-active {
+  @apply btn btn-sm mr-2 border border-primary btn-primary text-base-200;
+}

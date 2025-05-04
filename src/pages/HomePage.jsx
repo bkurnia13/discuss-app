@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { asyncPopulateUsersAndThreads } from '../states/shared/action';
 import { sortCategoryFromThreads } from '../states/category/action';
+import { setFilterThreadsActionCreator } from '../states/filterThreads/action';
 import PopularCategory from '../components/PopularCategory';
 import DiscussItem from '../components/DiscussItem';
 import DiscussItemSkeleton from '../components/DiscussItemSkeleton';
@@ -10,7 +11,14 @@ import AddThread from '../components/AddThread';
 
 export default function HomePage() {
   const dispatch = useDispatch();
-  const { isLoading, authUser, users = [], threads = [] } = useSelector((states) => states);
+  const {
+    isLoading,
+    authUser,
+    users = [],
+    threads = [],
+    activeCategory = [],
+    filterThreads = [],
+  } = useSelector((states) => states);
 
   useEffect(() => {
     dispatch(asyncPopulateUsersAndThreads());
@@ -18,9 +26,10 @@ export default function HomePage() {
 
   useEffect(() => {
     dispatch(sortCategoryFromThreads(threads));
-  }, [threads]);
+    dispatch(setFilterThreadsActionCreator({ threads, activeCategory }));
+  }, [threads, activeCategory]);
 
-  const threadList = threads.map((thread) => ({
+  const threadList = filterThreads.map((thread) => ({
     ...thread,
     user: users.find((user) => user.id === thread.ownerId),
     authUser: authUser?.id,
