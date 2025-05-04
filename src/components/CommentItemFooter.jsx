@@ -10,12 +10,10 @@ function CommentItemFooter({ commentId, upVotesBy, downVotesBy }) {
   const dispatch = useDispatch();
   const authUser = useSelector((states) => states.authUser);
 
-  const checkUpVote = upVotesBy.includes(authUser.id);
-  const checkDownVote = downVotesBy.includes(authUser.id);
+  const checkUpVote = authUser ? upVotesBy.includes(authUser.id) : false;
+  const checkDownVote = authUser ? downVotesBy.includes(authUser.id) : false;
   const actionUpVote = checkUpVote ? VoteAction.NEUTRAL_VOTE : VoteAction.UP_VOTE;
   const actionDownVote = checkDownVote ? VoteAction.NEUTRAL_VOTE : VoteAction.DOWN_VOTE;
-
-  console.log(downVotesBy);
 
   const onUpVoteComment = () => {
     dispatch(asyncVoteComment({ commentId, action: actionUpVote }));

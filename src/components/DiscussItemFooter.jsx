@@ -15,8 +15,8 @@ function DiscussItemFooter({ id, upVotesBy, downVotesBy, totalComments, category
 
   const { pathname } = useLocation();
   const isDetailPage = pathname.includes('/threads/');
-  const checkUpVote = upVotesBy.includes(authUser.id);
-  const checkDownVote = downVotesBy.includes(authUser.id);
+  const checkUpVote = authUser ? upVotesBy.includes(authUser.id) : false;
+  const checkDownVote = authUser ? downVotesBy.includes(authUser.id) : false;
   const actionUpVote = checkUpVote ? VoteAction.NEUTRAL_VOTE : VoteAction.UP_VOTE;
   const actionDownVote = checkDownVote ? VoteAction.NEUTRAL_VOTE : VoteAction.DOWN_VOTE;
 

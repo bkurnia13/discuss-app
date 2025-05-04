@@ -117,8 +117,8 @@ function asyncVoteThreadDetail(action) {
   return async (dispatch, getState) => {
     const authUser = getState().authUser;
     const threadDetail = getState().threadDetail;
-    const checkUpVote = threadDetail.upVotesBy.includes(authUser.id);
-    const checkDownVote = threadDetail.downVotesBy.includes(authUser.id);
+    const checkUpVote = authUser ? threadDetail.upVotesBy.includes(authUser.id) : false;
+    const checkDownVote = authUser ? threadDetail.downVotesBy.includes(authUser.id) : false;
     const checkNeutral = action === VoteAction.NEUTRAL_VOTE;
 
     let reverseAction = VoteAction.NEUTRAL_VOTE;
@@ -134,15 +134,17 @@ function asyncVoteThreadDetail(action) {
     }
 
     // optimistically apply action
-    dispatch(voteThreadDetailActionCreator({ userId: authUser.id, action }));
+    dispatch(voteThreadDetailActionCreator({ userId: authUser?.id, action }));
 
     try {
-      await api.voteThread({ threadId: threadDetail.id, action: action });
+      if (authUser) {
+        await api.voteThread({ threadId: threadDetail.id, action: action });
+      }
     } catch (error) {
       toast.error(error.message);
 
       //reverse action
-      dispatch(voteThreadDetailActionCreator({ userId: authUser.id, action: reverseAction }));
+      dispatch(voteThreadDetailActionCreator({ userId: authUser?.id, action: reverseAction }));
     }
   };
 }
@@ -152,13 +154,17 @@ function asyncVoteComment({ commentId, action }) {
     const authUser = getState().authUser;
     const threadDetail = getState().threadDetail;
 
-    const checkUpVote = threadDetail.comments
-      .find((comment) => comment.id === commentId)
-      .upVotesBy.includes(authUser.id);
+    const checkUpVote = authUser
+      ? threadDetail.comments
+        .find((comment) => comment.id === commentId)
+        .upVotesBy.includes(authUser?.id)
+      : false;
 
-    const checkDownVote = threadDetail.comments
-      .find((comment) => comment.id === commentId)
-      .downVotesBy.includes(authUser.id);
+    const checkDownVote = authUser
+      ? threadDetail.comments
+        .find((comment) => comment.id === commentId)
+        .downVotesBy.includes(authUser?.id)
+      : false;
 
     const checkNeutral = action === VoteAction.NEUTRAL_VOTE;
 
@@ -175,10 +181,12 @@ function asyncVoteComment({ commentId, action }) {
     }
 
     // optimistically apply action
-    dispatch(voteCommentActionCreator({ userId: authUser.id, commentId, action }));
+    dispatch(voteCommentActionCreator({ userId: authUser?.id, commentId, action }));
 
     try {
-      await api.voteCommnet({ threadId: threadDetail.id, commentId, action });
+      if (authUser) {
+        await api.voteCommnet({ threadId: threadDetail.id, commentId, action });
+      }
     } catch (error) {
       toast.error(error.message);
 

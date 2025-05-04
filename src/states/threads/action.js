@@ -78,8 +78,8 @@ function asyncVoteThread({ threadId, action }) {
     const authUser = getState().authUser;
     const threads = getState().threads;
     const thread = threads.find((thread) => thread.id === threadId);
-    const checkUpVote = thread.upVotesBy.includes(authUser.id);
-    const checkDownVote = thread.downVotesBy.includes(authUser.id);
+    const checkUpVote = authUser ? thread.upVotesBy.includes(authUser.id) : false;
+    const checkDownVote = authUser ? thread.downVotesBy.includes(authUser.id) : false;
     const checkNeutral = action === VoteAction.NEUTRAL_VOTE;
 
     let reverseAction = VoteAction.NEUTRAL_VOTE;
@@ -95,15 +95,17 @@ function asyncVoteThread({ threadId, action }) {
     }
 
     // optimistically apply action
-    dispatch(voteThreadActionCreator({ userId: authUser.id, threadId, action }));
+    dispatch(voteThreadActionCreator({ userId: authUser?.id, threadId, action }));
 
     try {
-      await api.voteThread({ threadId, action: action });
+      if (authUser) {
+        await api.voteThread({ threadId, action: action });
+      }
     } catch (error) {
       toast.error(error.message);
 
       //reverse action
-      dispatch(voteThreadActionCreator({ userId: authUser.id, threadId, action: reverseAction }));
+      dispatch(voteThreadActionCreator({ userId: authUser?.id, threadId, action: reverseAction }));
     }
   };
 }

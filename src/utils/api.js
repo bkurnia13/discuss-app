@@ -223,7 +223,7 @@ const api = (() => {
     const { status, message } = responseJson;
 
     if (status !== 'success') {
-      toast.error(message);
+      console.log(message);
     } else {
       toast.success(message);
     }
@@ -264,6 +264,24 @@ const api = (() => {
     return vote;
   }
 
+  async function getLeaderboard() {
+    const response = await fetch(`${BASE_URL}/leaderboards`);
+
+    const responseJson = await response.json();
+
+    const { status, message } = responseJson;
+
+    if (status !== 'success') {
+      toast.error(message);
+    }
+
+    const {
+      data: { leaderboards },
+    } = responseJson;
+
+    return leaderboards;
+  }
+
   return {
     putAccessToken,
     getAccessToken,
@@ -277,6 +295,7 @@ const api = (() => {
     createComment,
     voteThread,
     voteCommnet,
+    getLeaderboard,
   };
 })();
 
