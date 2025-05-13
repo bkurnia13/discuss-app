@@ -3,7 +3,7 @@ import api from '../../utils/api';
 import { isLoadingSkeletonActionCreator } from '../loading/action';
 
 const ActionType = {
-  RECEIVE_LEADERBOARD: 'RECEIVE_LEADERBOARD',
+  RECEIVE_LEADERBOARD: 'leaderboard/receive',
 };
 
 function receiveLeaderboardActionCreator(leaderboard) {

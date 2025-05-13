@@ -1,7 +1,7 @@
 import popularCategory from '../../utils/popularCaegory';
 
 const ActionType = {
-  RECEIVE_PUPOLAR_CATEGORY: 'RECEIVE_PUPOLAR_CATEGORY',
+  RECEIVE_PUPOLAR_CATEGORY: 'popularCategory/receive',
 };
 
 function receivePopularCategory(categories) {

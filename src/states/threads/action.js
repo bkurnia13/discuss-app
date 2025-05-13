@@ -3,11 +3,11 @@ import api from '../../utils/api';
 import { isLoadingButtonActionCreator } from '../loading/action';
 
 const ActionType = {
-  RECEIVE_THREADS: 'RECEIVE_THREADS',
-  ADD_THREADS: 'ADD_THREADS',
-  UP_VOTE_THREAD: 'UP_VOTE_THREAD',
-  DOWN_VOTE_THREAD: 'DOWN_VOTE_THREAD',
-  NEUTRAL_VOTE_THREAD: 'NEUTRAL_VOTE_THREAD',
+  RECEIVE_THREADS: 'threads/receive',
+  ADD_THREADS: 'threads/add',
+  UP_VOTE_THREAD: 'threads/upVote',
+  DOWN_VOTE_THREAD: 'threads/downVote',
+  NEUTRAL_VOTE_THREAD: 'threads/neutralVote',
 };
 
 const VoteAction = {
@@ -66,7 +66,7 @@ function asyncAddThread({ title, category = '', body }) {
         document.getElementById('create-new-thread').close();
       }
     } catch (error) {
-      console.log(error.message);
+      toast.error(error.message);
     }
 
     dispatch(isLoadingButtonActionCreator(false));
@@ -104,7 +104,7 @@ function asyncVoteThread({ threadId, action }) {
     } catch (error) {
       toast.error(error.message);
 
-      //reverse action
+      // reverse action
       dispatch(voteThreadActionCreator({ userId: authUser?.id, threadId, action: reverseAction }));
     }
   };

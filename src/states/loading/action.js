@@ -1,11 +1,11 @@
 const ActionType = {
-  SET_IS_LOADING_BUTTON: 'SET_IS_LOADING_BUTTON',
-  SET_IS_LOADING_SKELETON: 'SET_IS_LOADING_SKELETON',
+  SET_IS_LOADING_BUTTON: 'isLoadingButton/set',
+  SET_IS_LOADING_SKELETON: 'isLoadingSkeleton/set',
 };
 
 function isLoadingButtonActionCreator(isLoading) {
   return {
-    type: 'SET_IS_LOADING_BUTTON',
+    type: ActionType.SET_IS_LOADING_BUTTON,
     payload: {
       isLoading,
     },
@@ -14,7 +14,7 @@ function isLoadingButtonActionCreator(isLoading) {
 
 function isLoadingSkeletonActionCreator(isLoading) {
   return {
-    type: 'SET_IS_LOADING_SKELETON',
+    type: ActionType.SET_IS_LOADING_SKELETON,
     payload: {
       isLoading,
     },

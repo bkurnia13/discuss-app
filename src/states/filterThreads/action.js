@@ -1,5 +1,5 @@
 const ActionType = {
-  SET_FILTER_THREADS: 'SET_FILTER_THREADS',
+  SET_FILTER_THREADS: 'filterThreads/set',
 };
 
 function setFilterThreadsActionCreator({ threads = [], activeCategory = [] }) {

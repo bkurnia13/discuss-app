@@ -3,7 +3,7 @@ import { isLoadingButtonActionCreator } from '../loading/action';
 import api from '../../utils/api';
 
 const ActionType = {
-  RECEIVE_USERS: 'RECEIVE_USERS',
+  RECEIVE_USERS: 'users/receive',
 };
 
 function receiveUsersActionCreator(users) {

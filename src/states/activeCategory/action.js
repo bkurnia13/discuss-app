@@ -1,5 +1,5 @@
 const ActionType = {
-  SET_ACTIVE_CATEGORY: 'SET_ACTIVE_CATEGORY',
+  SET_ACTIVE_CATEGORY: 'activeCategory/set',
 };
 
 function setActiveCategoryActionCreator(category) {

@@ -5,15 +5,15 @@ import { isLoadingButtonActionCreator } from '../loading/action';
 import { isLoadingSkeletonActionCreator } from '../loading/action';
 
 const ActionType = {
-  RECEIVE_THREAD_DETAIL: 'RECEIVE_THREAD_DETAIL',
-  CLEAR_THREAD_DETAIL: 'CLEAR_THREAD_DETAIL',
-  ADD_COMMENT: 'ADD_COMMENT',
-  UP_VOTE_THREAD_DETAIL: 'UP_VOTE_THREAD_DETAIL',
-  DOWN_VOTE_THREAD_DETAIL: 'DOWN_VOTE_THREAD_DETAIL',
-  NEUTRAL_VOTE_THREAD_DETAIL: 'NEUTRAL_VOTE_THREAD_DETAIL',
-  UP_VOTE_COMMENT: 'UP_VOTE_COMMENT',
-  DOWN_VOTE_COMMENT: 'DOWN_VOTE_COMMENT',
-  NEUTRAL_VOTE_COMMENT: 'NEUTRAL_VOTE_COMMENT',
+  RECEIVE_THREAD_DETAIL: 'threadDetail/receive',
+  CLEAR_THREAD_DETAIL: 'threadDetail/clear',
+  ADD_COMMENT: 'threadDetail/addComment',
+  UP_VOTE_THREAD_DETAIL: 'threadDetail/upVote',
+  DOWN_VOTE_THREAD_DETAIL: 'threadDetail/downVote',
+  NEUTRAL_VOTE_THREAD_DETAIL: 'threadDetail/neutralVote',
+  UP_VOTE_COMMENT: 'comment/upVote',
+  DOWN_VOTE_COMMENT: 'comment/downVote',
+  NEUTRAL_VOTE_COMMENT: 'comment/neutralVote',
 };
 
 function receiveThreadDetailActionCreator(threadDetail) {
@@ -88,7 +88,7 @@ function asyncReceiveThreadDetail(threadId) {
       const threadDetail = await api.getThreadDetail(threadId);
       dispatch(receiveThreadDetailActionCreator(threadDetail));
     } catch (error) {
-      console.log(error.message);
+      toast.error(error.message);
     }
 
     dispatch(isLoadingSkeletonActionCreator(false));
@@ -106,7 +106,7 @@ function asyncAddComment({ threadId, content }) {
         dispatch(addCommentActionCreator(comment));
       }
     } catch (error) {
-      console.log(error.message);
+      toast.error(error.message);
     }
 
     dispatch(isLoadingButtonActionCreator(false));
@@ -185,14 +185,14 @@ function asyncVoteComment({ commentId, action }) {
 
     try {
       if (authUser) {
-        await api.voteCommnet({ threadId: threadDetail.id, commentId, action });
+        await api.voteComment({ threadId: threadDetail.id, commentId, action });
       }
     } catch (error) {
       toast.error(error.message);
 
       //reverse action
       dispatch(
-        voteCommentActionCreator({ threadId: threadDetail.id, commentId, action: reverseAction })
+        voteCommentActionCreator({ userId: authUser?.id, commentId, action: reverseAction })
       );
     }
   };

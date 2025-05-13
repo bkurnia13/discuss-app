@@ -235,7 +235,7 @@ const api = (() => {
     return vote;
   }
 
-  async function voteCommnet({ threadId, commentId, action }) {
+  async function voteComment({ threadId, commentId, action }) {
     const response = await _fetchWithAuth(
       `${BASE_URL}/threads/${threadId}/comments/${commentId}/${action}`,
       {
@@ -294,7 +294,7 @@ const api = (() => {
     createThread,
     createComment,
     voteThread,
-    voteCommnet,
+    voteComment,
     getLeaderboard,
   };
 })();
