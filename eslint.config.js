@@ -2,6 +2,7 @@ import js from '@eslint/js';
 import globals from 'globals';
 import pluginReact from 'eslint-plugin-react';
 import { defineConfig } from 'eslint/config';
+import pluginCypress from 'eslint-plugin-cypress/flat';
 import daStyle from 'eslint-config-dicodingacademy';
 
 export default defineConfig([
@@ -22,6 +23,7 @@ export default defineConfig([
       },
     },
   },
+  pluginCypress.configs.recommended,
   daStyle,
   {
     rules: {

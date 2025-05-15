@@ -8,7 +8,7 @@ export default function UserButton() {
   const authUser = useSelector((states) => states.authUser);
 
   return (
-    <div className="dropdown dropdown-end">
+    <div className="dropdown dropdown-end" data-cy="user-button">
       <div tabIndex={0} role="button" className="ml-4 cursor-pointer">
         <div className="avatar">
           <div className="ring-primary ring-offset-base-100 w-12 h-12 rounded-full ring ring-offset-2">

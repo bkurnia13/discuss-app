@@ -8,6 +8,7 @@ export default function InputField({
   value = '',
   disabled = false,
   onChange,
+  ...rest
 }) {
   return (
     <label className="input input-md input-primary w-full lg:w-2/3 mb-3">
@@ -19,6 +20,7 @@ export default function InputField({
         value={value}
         disabled={disabled}
         onChange={onChange}
+        {...rest}
       />
     </label>
   );

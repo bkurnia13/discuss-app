@@ -41,6 +41,7 @@ export default function LoginForm() {
         value={email}
         onChange={onEmailChange}
         disabled={isLoading.button}
+        data-cy="login-input-email"
       >
         <EmailIcon />
       </InputField>
@@ -50,6 +51,7 @@ export default function LoginForm() {
         value={password}
         onChange={onPasswordChange}
         disabled={isLoading.button}
+        data-cy="login-input-password"
       >
         <PasswordIcon />
       </InputField>
