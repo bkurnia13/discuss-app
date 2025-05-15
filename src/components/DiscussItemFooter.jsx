@@ -44,6 +44,7 @@ function DiscussItemFooter({ id, upVotesBy, downVotesBy, totalComments, category
     <div className="flex flex-wrap justify-between items-center px-6 py-4">
       <div>
         <button
+          data-testid="rtl-like-button"
           className={checkUpVote ? 'btn btn-sm btn-primary' : 'btn btn-sm text-primary'}
           onClick={() => onUpVoteThread()}
         >
@@ -51,6 +52,7 @@ function DiscussItemFooter({ id, upVotesBy, downVotesBy, totalComments, category
           <span>{upVotesBy.length}</span>
         </button>
         <button
+          data-testid="rtl-dislike-button"
           className={checkDownVote ? 'btn btn-sm btn-error' : 'btn btn-sm text-error'}
           onClick={() => onDownVoteThread()}
         >
