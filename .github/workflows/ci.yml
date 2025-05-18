@@ -18,4 +18,5 @@ jobs:
       - name: npm install and test
         run: |
           npm install
+          npx playwright install
           npm run ci:test
