@@ -30,7 +30,7 @@ export default function Navbar() {
     <div className="navbar flex justify-center w-full sticky top-0 z-30 bg-base-100/50 [transform:translate3d(0,0,0)] backdrop-blur shadow-md px-3 py-6 sm:px-6 md:px-12 lg:px-24">
       <div className="navbar-start">
         <Link to="/" className="text-4xl font-bold text-primary hover:text-success">
-          DiscussApp
+          Discuss App
         </Link>
       </div>
       <div className="navbar-end">
