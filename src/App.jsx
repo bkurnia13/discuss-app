@@ -2,7 +2,7 @@ import React from 'react';
 import { Routes, Route } from 'react-router';
 import './App.css';
 import Layout from './pages/Layout';
-import HomePage from './pages/Homepage';
+import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import DetailPage from './pages/DetailPage';
 import LeaderboardPage from './pages/LeaderboardPage';
