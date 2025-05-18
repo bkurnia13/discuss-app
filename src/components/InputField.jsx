@@ -8,10 +8,12 @@ export default function InputField({
   value = '',
   disabled = false,
   onChange,
+  size = 'input-md',
+  color = 'input-primary',
   ...rest
 }) {
   return (
-    <label className="input input-md input-primary w-full lg:w-2/3 mb-3">
+    <label className={`input ${size} ${color} w-full lg:w-2/3 mb-3`}>
       {children}
       <input
         type={type}
@@ -33,4 +35,6 @@ InputField.propTypes = {
   value: PropTypes.string,
   disabled: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
+  size: PropTypes.string,
+  color: PropTypes.string,
 };

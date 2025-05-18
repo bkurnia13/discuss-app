@@ -5,9 +5,9 @@ import DiscussItemBody from './DiscussItemBody';
 import DiscussItemFooter from './DiscussItemFooter';
 import { threadShape } from '../utils/propShape';
 
-function DiscussItem({ thread }) {
+function DiscussItem({ thread, size = 'card-md', bg = 'bg-base-200', shadow = 'shadow-md' }) {
   return (
-    <div className="card w-full bg-base-200 card-md shadow-md mb-6">
+    <div className={`card w-full mb-6 ${size} ${bg} ${shadow}`}>
       <div className="card-body p-0 gap-0">
         <DiscussItemHeader {...thread.user} createdAt={thread.createdAt} />
         <DiscussItemBody {...thread} />
@@ -19,6 +19,9 @@ function DiscussItem({ thread }) {
 
 DiscussItem.propTypes = {
   thread: PropTypes.shape(threadShape),
+  size: PropTypes.string,
+  bg: PropTypes.string,
+  shadow: PropTypes.string,
 };
 
 export default DiscussItem;

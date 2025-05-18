@@ -3,8 +3,6 @@ const ActionType = {
 };
 
 function setFilterThreadsActionCreator({ threads = [], activeCategory = [] }) {
-  console.log(threads, activeCategory);
-
   return {
     type: ActionType.SET_FILTER_THREADS,
     payload: {
