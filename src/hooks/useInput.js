@@ -4,5 +4,5 @@ export default function useInput(defaultValue = '') {
   const [value, setValue] = React.useState(defaultValue);
   const handleValueChange = (event) => setValue(event.target.value);
 
-  return [value, setValue];
+  return [value, handleValueChange, setValue];
 }
