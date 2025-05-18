@@ -19,11 +19,16 @@ export default function UserButton() {
 
       <ul
         tabIndex={0}
-        className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+        className="dropdown-content menu bg-base-300 rounded-box z-1 w-52 p-2 shadow-sm mt-2"
       >
+        <li className="menu-disabled">
+          <span className="text-primary px-3">{authUser.name}</span>
+        </li>
+        <div className="divider m-0"></div>
         <li>
           <button
             type="buton"
+            className="text-primary"
             onClick={() => {
               document.activeElement.blur();
               dispatch(asyncUnsetAuthUser());
